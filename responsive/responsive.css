@@ -43,3 +43,8 @@
   and (max-width: 800px) {
     .ralphy {background:url(ralphy.gif) 0 -368px;}
 }
+
+@media only screen
+  and (max-width: 600px) {
+    .ralphy {background:url(ralphy.gif) 250px -368px;}
+}
