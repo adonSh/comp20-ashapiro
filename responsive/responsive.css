@@ -2,11 +2,44 @@
  * responsive.css
  *   -- Adon Shapiro
  *
- */
+ * * * * * * * * * */
 
 .ralphy {
   width: 250px;
   height: 184px;
-  background:url(ralphy.gif) 250px 0;
+}
+
+@media only screen
+  and (min-width: 1401px) {
+    .ralphy {background:url(ralphy.gif) 0 0;}
 }
   
+@media only screen
+  and (min-width: 1201px)
+  and (max-width: 1400px) {
+    .ralphy {background:url(ralphy.gif) 250px 0;}
+}
+
+@media only screen
+  and (min-width: 1001px)
+  and (max-width: 1200px) {
+    .ralphy {background:url(ralphy.gif) 0 -184px;}
+}
+
+@media only screen
+  and (min-width: 801px)
+  and (max-width: 1000px) {
+    .ralphy {background:url(ralphy.gif) 250px -184px;}
+}
+
+@media only screen
+  and (min-width: 601px)
+  and (max-width: 800px) {
+    .ralphy {background:url(ralphy.gif) 250px -184px;}
+}
+
+@media only screen
+  and (min-width: 601px)
+  and (max-width: 800px) {
+    .ralphy {background:url(ralphy.gif) 0 -368px;}
+}
