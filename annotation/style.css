@@ -1,0 +1,18 @@
+/*
+ * --adonSh
+ */
+
+body {
+  background-color: #eee;
+  font-family: Verdana;
+}
+
+#failvideo {
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.2);
+}
+
+#lyrics {
+  font-size: 1.25em;
+  float: right;
+  width: 50%;
+}

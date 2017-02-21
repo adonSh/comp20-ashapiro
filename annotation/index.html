@@ -10,11 +10,22 @@
 
 <h1 id="title">Fail</h1>
 
-<video src="https://www.cs.tufts.edu/comp/20/fail.mp4" id="failvideo" controls></video>
+<video src="https://www.cs.tufts.edu/comp/20/fail.mp4" id="failvideo" controls>
+</video>
 <div id="lyrics"></div>
 
 <script>
-  // Complete this section and create a CSS file named style.css
+  function print_lyrics() {
+    var text = document.getElementById("lyrics");
+    text.innerHTML = "hey";
+  }
+
+  var vid = document.getElementById("failvideo");
+  vid.addEventListener("timeupdate", function() {
+    if (this.currentTime >= 5) {
+      print_lyrics();
+    }
+  });
 </script>
 </body>
 </html>
