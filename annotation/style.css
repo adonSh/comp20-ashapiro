@@ -12,7 +12,8 @@ body {
 }
 
 #lyrics {
+  margin-top: 20px;
+  margin-left: 20px;
   font-size: 1.25em;
-  float: right;
   width: 50%;
 }

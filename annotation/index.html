@@ -15,15 +15,34 @@
 <div id="lyrics"></div>
 
 <script>
-  function print_lyrics() {
-    var text = document.getElementById("lyrics");
-    text.innerHTML = "hey";
-  }
-
   var vid = document.getElementById("failvideo");
   vid.addEventListener("timeupdate", function() {
-    if (this.currentTime >= 5) {
-      print_lyrics();
+    var text = document.getElementById("lyrics");
+
+    if (this.currentTime > 9 && this.currentTime < 16) {
+      text.innerHTML = "You've got me feelin' emotions";
+    } else if (this.currentTime > 21) {
+      text.innerHTML = "Deeper than I've ever dreamed of";
+    } else if (this.currentTime > 26) {
+      text.innerHTML = "You've got me feelin' emotions";
+    } else if (this.currentTime > 31) {
+      text.innerHTML = "Higher than the Heavens above";
+    } else if (this.currentTime > 36) {
+      text.innerHTML = "I feel good, I feel nice";
+    } else if (this.currentTime > 46) {
+      text.innerHTML = "I've never felt so satisfied";
+    } else if (this.currentTime > 51) {
+      text.innerHTML = "I'm in love, I'm alive";
+    } else if (this.currentTime > 56) {
+      text.innerHTML = "Intoxicated, flyin' high";
+    } else if (this.currentTime > 61) {
+      text.innerHTML = "Feels like a dream";
+    } else if (this.currentTime > 66) {
+      text.innerHTML = "When you touch me tenderly";
+    } else if (this.currentTime > 71) {
+      text.innerHTML = "I don't know if it's real";
+    } else if (this.currentTime > 76) {
+      text.innerHTML = "But I like the way I feel inside";
     }
   });
 </script>
