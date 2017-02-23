@@ -19,30 +19,36 @@
   vid.addEventListener("timeupdate", function() {
     var text = document.getElementById("lyrics");
 
-    if (this.currentTime > 9 && this.currentTime < 16) {
+    if ((this.currentTime > 9 && this.currentTime < 13) ||
+         (this.currentTime > 59 && this.currentTime < 63)) {
       text.innerHTML = "You've got me feelin' emotions";
-    } else if (this.currentTime > 21) {
+    } else if ((this.currentTime > 13 && this.currentTime < 17) ||
+               (this.currentTime > 63 && this.currentTime < 67)) {
       text.innerHTML = "Deeper than I've ever dreamed of";
-    } else if (this.currentTime > 26) {
+    } else if ((this.currentTime > 17 && this.currentTime < 21) ||
+               (this.currentTime > 67 && this.currentTime < 79)) {
       text.innerHTML = "You've got me feelin' emotions";
-    } else if (this.currentTime > 31) {
+    } else if ((this.currentTime > 21 && this.currentTime < 27) ||
+               (this.currentTime > 72 && this.currentTime < 79)) {
       text.innerHTML = "Higher than the Heavens above";
-    } else if (this.currentTime > 36) {
+    } else if (this.currentTime > 27 && this.currentTime < 31) {
       text.innerHTML = "I feel good, I feel nice";
-    } else if (this.currentTime > 46) {
+    } else if (this.currentTime > 31 && this.currentTime < 35) {
       text.innerHTML = "I've never felt so satisfied";
-    } else if (this.currentTime > 51) {
+    } else if (this.currentTime > 35 && this.currentTime < 38) {
       text.innerHTML = "I'm in love, I'm alive";
-    } else if (this.currentTime > 56) {
+    } else if (this.currentTime > 38 && this.currentTime < 44) {
       text.innerHTML = "Intoxicated, flyin' high";
-    } else if (this.currentTime > 61) {
+    } else if (this.currentTime > 44 && this.currentTime < 50) {
       text.innerHTML = "Feels like a dream";
-    } else if (this.currentTime > 66) {
+    } else if (this.currentTime > 50 && this.currentTime < 53) {
       text.innerHTML = "When you touch me tenderly";
-    } else if (this.currentTime > 71) {
+    } else if (this.currentTime > 53 && this.currentTime < 56 ) {
       text.innerHTML = "I don't know if it's real";
-    } else if (this.currentTime > 76) {
+    } else if (this.currentTime > 56 && this.currentTime < 59) {
       text.innerHTML = "But I like the way I feel inside";
+    } else {
+      text.innerHTML = "";
     }
   });
 </script>
