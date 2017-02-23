@@ -12,11 +12,28 @@
   <div id="map">
     <script>
       var map;
+      var myLat = 0;
+      var myLng = 0;
+
+      function get_loc() {
+        var loc = "";
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            myLat = position.coords.latitude;
+            myLng = position.coords.longitude;
+          });
+        } else {
+          alert("location not supported");
+        }
+        return loc + myLat;
+      }
+
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 8
         });
+        alert(get_loc());
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFgY9bZBvHYlfE70qlfiu-D5X5JfyIRck&callback=initMap">
