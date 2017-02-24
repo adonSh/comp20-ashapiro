@@ -14,6 +14,21 @@
     var map;
     var here = {lat: 0, lng: 0};
 
+    function post_data() {
+      var datastore = "https://defense-in-derpth.herokuapp.com/submit";
+      var data = "username=p9DXn1Nr&lat=" + here.lat + "&lng=" + here.lng;
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("POST", datastore, true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          alert(this.responseText);
+        }
+      };
+      xhr.send(data);
+    }
+
     function find_me() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(mark_coords);
@@ -25,7 +40,7 @@
     function mark_coords(pos) {
       var img = {
         url: "black_car.png",
-        scaledSize: new google.maps.Size(40, 13),
+        scaledSize: new google.maps.Size(30, 13),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 13)
       };
