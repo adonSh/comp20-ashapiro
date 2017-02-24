@@ -13,17 +13,44 @@
     <script>
     var map;
     var here = {lat: 0, lng: 0};
+    var user = "p9DXn1Nr";
+
+    function show_vehicles(car_list) {
+      var vehicles = JSON.parse(car_list).vehicles;
+      var info = new google.maps.InfoWindow();
+      var pos = {};
+      var vehicle_marker = {
+        url: "black_car.png",
+        scaledSize: new google.maps.Size(50, 19),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 13)
+      };
+
+      /* create a marker and a label for every car */
+      for (i = 0; i < vehicles.length; i++) {
+        pos = { lat: vehicles[i].lat, lng: vehicles[i].lng };
+        var marker = new google.maps.Marker({ position: pos,
+                                              map: map,
+                                              icon: vehicle_marker,
+                                              title: vehicles[i].username });
+        google.maps.event.addListener(marker, "click", function() {
+          info.setContent(this.title);
+          info.open(map, this);
+        });
+      }
+    }
 
     function post_data() {
       var datastore = "https://defense-in-derpth.herokuapp.com/submit";
-      var data = "username=p9DXn1Nr&lat=" + here.lat + "&lng=" + here.lng;
+      var data = "username=" + user + "&lat=" + here.lat + "&lng=" + here.lng;
       var xhr = new XMLHttpRequest();
 
       xhr.open("POST", datastore, true);
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          alert(this.responseText);
+          console.log(this.responseText);
+          show_vehicles(this.responseText);
         }
       };
       xhr.send(data);
@@ -37,16 +64,16 @@
       }
     }
 
+    /* put a marker at current location and go there */
     function mark_coords(pos) {
-      var img = {
-        url: "black_car.png",
-        scaledSize: new google.maps.Size(30, 13),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 13)
-      };
+      var infowindow = new google.maps.InfoWindow();
       here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
       var marker = new google.maps.Marker({ position: here, map: map,
-                                            icon: img });
+                                            title: user});
+      google.maps.event.addListener(marker, "click", function() {
+        infowindow.setContent(marker.title);
+        infowindow.open(map, marker);
+      });
 
       map.panTo(here);
     }
