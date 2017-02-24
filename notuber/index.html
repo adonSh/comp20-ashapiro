@@ -11,35 +11,35 @@
 <body>
   <div id="map">
     <script>
-    var map_options = {
-      zoom: 8,
-      center: {lat: 0, lng: 0}
-    };
+    var map;
+    var here = {lat: 0, lng: 0};
 
-    function get_location() {
+    function find_me() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(get_coords);
+        navigator.geolocation.getCurrentPosition(mark_coords);
       } else {
         alert("location not supported");
       }
     }
 
-    function get_coords(pos) {
-      var lat = pos.coords.latitude;
-      var lng = pos.coords.longitude;
+    function mark_coords(pos) {
+      here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      var marker = new google.maps.Marker({ position: here, map: map,
+                                            icon: "black_car.png" });
 
-      map_options.center.lat = lat;
-      map_options.center.lng = lng;
+      map.panTo(here);
     }
 
-    function draw_map() {
-      var map;
-
-      get_location();
-      map = new google.maps.Map(document.getElementById("map"), map_options);
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: here,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      find_me();
     }
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFgY9bZBvHYlfE70qlfiu-D5X5JfyIRck&callback=draw_map">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFgY9bZBvHYlfE70qlfiu-D5X5JfyIRck&callback=initMap">
     </script>
   </div>
 </body>
