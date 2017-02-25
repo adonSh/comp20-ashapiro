@@ -15,8 +15,16 @@
     var here = {lat: 0, lng: 0};
     var user = "p9DXn1Nr";
 
+/*    setInterval(post_data, 5000); */
+    post_data();
+
+    /* TODO: */
+    function show_passengers(list) {
+      console.log("tbd");
+    }
+
     function show_vehicles(car_list) {
-      var vehicles = JSON.parse(car_list).vehicles;
+      var vehicles = car_list.vehicles;
       var info = new google.maps.InfoWindow();
       var pos = {};
       var vehicle_marker = {
@@ -49,8 +57,13 @@
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
-          show_vehicles(this.responseText);
+          var response = JSON.parse(this.responseText);
+          console.log(response);
+          if (response.vehicles) {
+            show_vehicles(response);
+          } else if (response.passengers) {
+            show_passengers(response);
+          }
         }
       };
       xhr.send(data);
