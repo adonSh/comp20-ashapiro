@@ -18,24 +18,42 @@
 /*    setInterval(post_data, 5000); */
     post_data();
 
-    /* TODO: */
-    function show_passengers(list) {
-      console.log("tbd");
+    function show_passengers(passengers) {
+      var info = new google.maps.InfoWindow();
+      var pos = {};
+      var passenger_marker = {
+        url: "passenger.png",
+        scaledSize: new google.maps.Size(100, 141),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 141)
+      };
+
+      /* create a marker and label for every passenger */
+      for (var i = 0; i < passengers.length; i++) {
+        pos = { lat: passengers[i].lat, lng: passengers[i].lng };
+        var marker = new google.maps.Marker({ position: pos,
+                                              map: map,
+                                              icon: passenger_marker,
+                                              title: passengers[i].username });
+        google.maps.addListener(marker, "click", function() {
+          info.setContent(this.title);
+          info.open(map, this);
+        });
+      }
     }
 
-    function show_vehicles(car_list) {
-      var vehicles = car_list.vehicles;
+    function show_vehicles(vehicles) {
       var info = new google.maps.InfoWindow();
       var pos = {};
       var vehicle_marker = {
         url: "black_car.png",
         scaledSize: new google.maps.Size(50, 19),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 13)
+        anchor: new google.maps.Point(0, 19)
       };
 
       /* create a marker and a label for every car */
-      for (i = 0; i < vehicles.length; i++) {
+      for (var i = 0; i < vehicles.length; i++) {
         pos = { lat: vehicles[i].lat, lng: vehicles[i].lng };
         var marker = new google.maps.Marker({ position: pos,
                                               map: map,
@@ -60,9 +78,9 @@
           var response = JSON.parse(this.responseText);
           console.log(response);
           if (response.vehicles) {
-            show_vehicles(response);
+            show_vehicles(response.vehicles);
           } else if (response.passengers) {
-            show_passengers(response);
+            show_passengers(response.passengers);
           }
         }
       };
@@ -78,14 +96,24 @@
     }
 
     /* put a marker at current location and go there */
+    /* TODO: marker changes size and scale when map zooms; don't know why */
     function mark_coords(pos) {
       var infowindow = new google.maps.InfoWindow();
       here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-      var marker = new google.maps.Marker({ position: here, map: map,
+      var you_are_here = {
+        url: "you.png",
+        scaledSize: new google.maps.Size(45, 75),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 50)
+      };
+      var marker = new google.maps.Marker({ position: here,
+                                            map: map,
+                                            icon: you_are_here,
                                             title: user});
+
       google.maps.event.addListener(marker, "click", function() {
-        infowindow.setContent(marker.title);
-        infowindow.open(map, marker);
+        infowindow.setContent(this.title);
+        infowindow.open(map, this);
       });
 
       map.panTo(here);
