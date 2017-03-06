@@ -18,6 +18,12 @@
 /*    setInterval(post_data, 5000); */
     post_data();
 
+    /* TODO */
+    function calculate_distance(here, there) {
+//      var d = google.maps.geometry.spherical.computeDistanceBetween(here, there);
+      return 3;
+    }
+
     function show_passengers(passengers) {
       var info = new google.maps.InfoWindow();
       var pos = {};
@@ -44,7 +50,7 @@
 
     function show_vehicles(vehicles) {
       var info = new google.maps.InfoWindow();
-      var pos = {};
+      var pos = { lat: 0, lng: 0 };
       var vehicle_marker = {
         url: "black_car.png",
         scaledSize: new google.maps.Size(50, 19),
@@ -60,7 +66,8 @@
                                               icon: vehicle_marker,
                                               title: vehicles[i].username });
         google.maps.event.addListener(marker, "click", function() {
-          info.setContent(this.title);
+          var distance = calculate_distance(here, pos);
+          info.setContent(this.title + ", " + distance + " miles away");
           info.open(map, this);
         });
       }
@@ -96,7 +103,6 @@
     }
 
     /* put a marker at current location and go there */
-    /* TODO: marker changes size and scale when map zooms; don't know why */
     function mark_coords(pos) {
       var infowindow = new google.maps.InfoWindow();
       here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
@@ -128,7 +134,7 @@
       find_me();
     }
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFgY9bZBvHYlfE70qlfiu-D5X5JfyIRck&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFgY9bZBvHYlfE70qlfiu-D5X5JfyIRck&callback=initMap&libraries=geometry">
     </script>
   </div>
 </body>
