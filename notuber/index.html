@@ -16,7 +16,7 @@
     var user = "p9DXn1Nr";
 
 /*    setInterval(post_data, 5000); */
-    setTimeout(post_data, 2000);
+//    setTimeout(post_data, 2000);
 
     function calculate_distance(p1, p2) {
       p1 = new google.maps.LatLng(p1.lat, p1.lng);
@@ -104,14 +104,21 @@
 
     function find_me() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(mark_coords);
+        navigator.geolocation.getCurrentPosition(mark_coords, err);
       } else {
         alert("location not supported");
       }
     }
 
+    /* failure function for geolocation */
+    function err(pos) {
+      alert("location could not be found");
+      map.setZoom(1);
+    }
+
     /* put a marker at current location and go there */
     function mark_coords(pos) {
+      console.log("hey");
       var infowindow = new google.maps.InfoWindow();
       here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
       var you_are_here = {
@@ -131,6 +138,7 @@
       });
 
       map.panTo(here);
+      post_data();
     }
 
     function initMap() {
