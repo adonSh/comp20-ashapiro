@@ -15,9 +15,6 @@
     var here = {lat: 0, lng: 0};
     var user = "p9DXn1Nr";
 
-/*    setInterval(post_data, 5000); */
-//    setTimeout(post_data, 2000);
-
     function calculate_distance(p1, p2) {
       p1 = new google.maps.LatLng(p1.lat, p1.lng);
       p2 = new google.maps.LatLng(p2.lat, p2.lng);
@@ -91,7 +88,6 @@
       xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var response = JSON.parse(this.responseText);
-          console.log(response);
           if (response.vehicles) {
             show_vehicles(response.vehicles);
           } else if (response.passengers) {
@@ -118,7 +114,6 @@
 
     /* put a marker at current location and go there */
     function mark_coords(pos) {
-      console.log("hey");
       var infowindow = new google.maps.InfoWindow();
       here = {lat: pos.coords.latitude, lng: pos.coords.longitude};
       var you_are_here = {
