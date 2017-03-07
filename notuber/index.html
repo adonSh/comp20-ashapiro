@@ -15,6 +15,8 @@
     var here = {lat: 0, lng: 0};
     var user = "p9DXn1Nr";
 
+/*    setInterval(post_data, 10000); */
+
     function calculate_distance(p1, p2) {
       p1 = new google.maps.LatLng(p1.lat, p1.lng);
       p2 = new google.maps.LatLng(p2.lat, p2.lng);
@@ -30,7 +32,7 @@
       var marker;
       var passenger_marker = {
         url: "passenger.png",
-        scaledSize: new google.maps.Size(100, 141),
+        scaledSize: new google.maps.Size(50, 70),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 141)
       };
@@ -44,7 +46,7 @@
                                               icon: passenger_marker,
                                               distance: dist,
                                               title: passengers[i].username });
-        google.maps.addListener(marker, "click", function() {
+        marker.addListener("click", function() {
           info.setContent(this.title + ", " + this.distance + " miles away");
           info.open(map, this);
         });
