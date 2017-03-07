@@ -16,17 +16,21 @@
     var user = "p9DXn1Nr";
 
 /*    setInterval(post_data, 5000); */
-    post_data();
+    setTimeout(post_data, 2000);
 
-    /* TODO */
-    function calculate_distance(here, there) {
-//      var d = google.maps.geometry.spherical.computeDistanceBetween(here, there);
-      return 3;
+    function calculate_distance(p1, p2) {
+      p1 = new google.maps.LatLng(p1.lat, p1.lng);
+      p2 = new google.maps.LatLng(p2.lat, p2.lng);
+      var meters = google.maps.geometry.spherical.computeDistanceBetween(p1, p2);
+      var miles = meters / 1609.34;
+
+      return miles;
     }
 
     function show_passengers(passengers) {
       var info = new google.maps.InfoWindow();
       var pos = {};
+      var marker;
       var passenger_marker = {
         url: "passenger.png",
         scaledSize: new google.maps.Size(100, 141),
@@ -37,12 +41,14 @@
       /* create a marker and label for every passenger */
       for (var i = 0; i < passengers.length; i++) {
         pos = { lat: passengers[i].lat, lng: passengers[i].lng };
-        var marker = new google.maps.Marker({ position: pos,
+        var dist = Math.round(calculate_distance(here, pos) * 100) / 100;
+        marker = new google.maps.Marker({ position: pos,
                                               map: map,
                                               icon: passenger_marker,
+                                              distance: dist,
                                               title: passengers[i].username });
         google.maps.addListener(marker, "click", function() {
-          info.setContent(this.title);
+          info.setContent(this.title + ", " + this.distance + " miles away");
           info.open(map, this);
         });
       }
@@ -51,6 +57,7 @@
     function show_vehicles(vehicles) {
       var info = new google.maps.InfoWindow();
       var pos = { lat: 0, lng: 0 };
+      var marker;
       var vehicle_marker = {
         url: "black_car.png",
         scaledSize: new google.maps.Size(50, 19),
@@ -61,13 +68,14 @@
       /* create a marker and a label for every car */
       for (var i = 0; i < vehicles.length; i++) {
         pos = { lat: vehicles[i].lat, lng: vehicles[i].lng };
-        var marker = new google.maps.Marker({ position: pos,
+        var dist = Math.round(calculate_distance(here, pos) * 100) / 100;
+        marker = new google.maps.Marker({ position: pos,
                                               map: map,
                                               icon: vehicle_marker,
+                                              distance: dist,
                                               title: vehicles[i].username });
-        google.maps.event.addListener(marker, "click", function() {
-          var distance = calculate_distance(here, pos);
-          info.setContent(this.title + ", " + distance + " miles away");
+        marker.addListener("click", function() {
+          info.setContent(this.title + ", " + this.distance + " miles away");
           info.open(map, this);
         });
       }
