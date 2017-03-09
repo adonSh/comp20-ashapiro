@@ -15,8 +15,6 @@
     var here = {lat: 0, lng: 0};
     var user = "p9DXn1Nr";
 
-/*    setInterval(post_data, 10000); */
-
     function calculate_distance(p1, p2) {
       p1 = new google.maps.LatLng(p1.lat, p1.lng);
       p2 = new google.maps.LatLng(p2.lat, p2.lng);
@@ -34,7 +32,7 @@
         url: "passenger.png",
         scaledSize: new google.maps.Size(50, 70),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 141)
+        anchor: new google.maps.Point(0, 70)
       };
 
       /* create a marker and label for every passenger */
@@ -122,7 +120,7 @@
         url: "you.png",
         scaledSize: new google.maps.Size(45, 75),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 50)
+        anchor: new google.maps.Point(0, 75)
       };
       var marker = new google.maps.Marker({ position: here,
                                             map: map,
