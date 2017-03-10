@@ -1,0 +1,29 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Messages</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(fetch_data);
+
+  function fetch_data() {
+    $.getJSON("https://messagehub.herokuapp.com/messages.json", update_page);
+  }
+
+  function update_page(data) {
+    console.log(data);
+    $("#messages").html("");
+    $.each(data, function() {
+      m = "<p>" + this.content + " by " + this.username + "</p>";
+      $("#messages").append(m);
+    });
+  }
+  </script>
+</head>
+
+<body>
+  <h1>Messages</h1>
+  <div id="messages">Loading...</div>
+</body>
+</html>
