@@ -14,7 +14,7 @@
   function update_page(data) {
     $("#messages").html("");
     $.each(data, function() {
-      m = "<p>" + this.content + " by " + this.username + "</p>";
+      var m = "<p>" + this.content + " by " + this.username + "</p>";
       $("#messages").append(m);
     });
   }
