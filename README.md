@@ -1,4 +1,4 @@
-#This repository contains all my labs and assignments for COMP20
+# This repository contains all my labs and assignments for COMP20
 
 My favorite assignment was Assignment 3. It was really neat to see how all the
 parts fit together form the previous assignment and to get a sort of overhead
