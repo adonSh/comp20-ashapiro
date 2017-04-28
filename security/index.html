@@ -9,33 +9,99 @@
 
 <h2>Introduction</h2>
   <p>
-  The product is Not Uber.
+  The "Not Uber" service provides a platform for potential passengers to find
+  active vehicles near them and for drivers to locate passengers requesting a
+  ride. My job is to find security flaws in the server that might allow a user
+  with malicious intent to access privileged data or otherwise compromise
+  the application.
   </p>
 
 <h2>Methodology</h2>
   <p>
-  Honestly, I have no idea what I'm doing.
+  The first thing I looked for in the server's code was any place where a user
+  might be able to enter strings without restriction. This is where I found the
+  first XSS vulnerability. Next I tried to see what the server would let me do
+  to it before I was either locked out or it gave up. This is how I found out
+  that the server would accept input until it failed. Finally, I realized that
+  I could also submit unsanitized strings to the /vehicle.json GET route and
+  I managed to access parts of the database that I should not have been able
+  to access.
   </p>
 
 <h2>Abstract of Findings</h2>
   <p>
-  The server and the client have numerous vulnerabilities and are open to a
-  myriad of XSS Attacks?
+  The server and the client have numerous vulnerabilities. Multiple pages are
+  open to attacks involving the insertion of malicious code into either the
+  web page or database or both. The database is also quite insecure. I managed
+  to access multiple entries in the private vehicles collection without the
+  usernames I was meant to have to access them.
   </p>
 
 <h2>Issues Found</h2>
-  <ul>
-    <li>No sanitized inputs</li>
-    <li>no size limit on database</li>
-  </ul>
+  <h3>Cross-Site Scripting Vulnerability in /submit and Homepage</h3>
+    <p>
+    Severity: High -- A malicious user could submit just about any code they
+    could think of and because it is entered into the database it would be
+    persistent. The potential for abuse here is essentially infinite.
+    </p><p>
+    Using <code>curl</code> I submitted a passenger whose username consisted
+    of a snippet of Javascript code. When this passenger's name was rendered
+    as HTML and displayed on the index page, the script was automatically
+    run. The script I submitted was mostly harmless, only displaying an alert
+    window, but a more malicious hacker could have displayed anything they
+    pleased on the homepage or done anything from stealing a user's cookies to
+    holding deleting the database and holding its contents for ransom. This
+    can be prevented by sanitizing input from the user and removing characters
+    that can be interpreted as anything other than text by the browser. <br>
+    <a href="pics/xss.png">Screenshot</a> 
+    </p>
+  <h3>No Submission Restrictions on /submit</h3>
+    <p>
+    Severity: Medium -- While this vulnerability has the potential to
+    completely disable the server, there is no sensitive information at stake.
+    It is also somewhat tedious to execute and easy to identify before serious
+    damage is caused.
+    </p><p>
+    I wrote a small bash script to submit passengers to the server one after
+    the other in an infinite loop. After running it for a few minutes, the
+    server was overwhelmed and became unresponsive. To avoid this, some limit
+    should be placed on either the size of the database or on a user's ability
+    to submit passengers indiscriminately. <br>
+    <a href="pics/overload.png">Screenshot</a>
+    </p>
+  <h3>Database Injection in /vehicle.json</h3>
+    <p>
+    Severity: Low -- Fortunately, there is no sensitive information in the
+    MongoDB collection in question, and an attacker would have to extract each
+    document one at a time anyway. This is still a serious issue with no small
+    potential for abuse.
+    </p><p>
+    By adding some MongoDB commands to the query string attached to
+    /vehicle.json I was able to access contents of the collection without
+    knowing a username. For example, the query string "username[$ne]=anything"
+    matches any entry in the database whose username is not "anything," causing
+    the page to display documents that the user should not be able to access
+    without first knowing the proper username. Again this could be easily fixed
+    by sanitizing inputs. <br>
+    <a href="pics/injection1.png">Screenshot 1</a>
+    <a href="pics/injection2.png">Screenshot 2</a>
+    </p>
 
 <h2>Conclusion</h2>
-<p>
-Seriously, I have no idea what I'm doing.
-</p>
+  <p>
+  The integrity of the application as it stands is easily compromised. However,
+  most of the problems are easily remedied. From now on, never trust user
+  input, and always sanitize strings submitted by users, especially if they
+  will later be rendered in HTML. The main lesson to be learned here is to
+  never allow users to do anything without restriction, whether it's the data
+  they submit or even how often they do it.
+  </p>
 
 <h2>References</h2>
-<p>?</p>
+  <ul>
+  <li>Kingsley Bowen gave me the idea for the script to overload the database.</li>
+  <li>Ming's injection example from Piazza</li>
+  </ul>
 
 </body>
 </html>
